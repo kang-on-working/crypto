@@ -3,6 +3,7 @@ package pkg
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/sha256"
 	"encoding/base64"
 	"errors"
 	"crypto/rand"
@@ -10,14 +11,20 @@ import (
 
 )
 
+func keyToHash(key string) []byte {
+	hash := sha256.Sum256([]byte(key))
+	return hash[:]
+}
+
 // Decrypt 함수는 주어진 암호화된 문자열을 복호화하여 원래 문자열을 반환합니다.
 func Decrypt(encryptedStr string, key string) (string, error) {
+
 	ciphertextBytes, err := base64.StdEncoding.DecodeString(encryptedStr)
 	if err != nil {
 		return "", err
 	}
-
-	block, err := aes.NewCipher([]byte(key))
+	HashKey := keyToHash(key)
+	block, err := aes.NewCipher(HashKey)
 	if err != nil {
 		return "", err
 	}
@@ -44,7 +51,8 @@ func Decrypt(encryptedStr string, key string) (string, error) {
 
 // Encrypt 함수는 주어진 원문 문자열을 암호화하여 암호화된 문자열을 반환합니다.
 func Encrypt(plainText string, key string) (string, error) {
-	block, err := aes.NewCipher([]byte(key))
+	HashKey := keyToHash(key)
+	block, err := aes.NewCipher(HashKey)
 	if err != nil {
 		return "", err
 	}
