@@ -1,37 +1,47 @@
 package main
 
 import (
-	"bufio"
+//	"bufio"
+//	"os"
 	"fmt"
-	"os"
 	"pkg"
 )
 
 func main() {
+	git, err := pkg.JsonParse("./git.json")	
+	if err != nil {
+		fmt.Println("Json Parsing Error: ", err)
+		return
+	}
+	fmt.Println(git)
+
+	/*
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Enter plain text: ")
 	plainText, _ := reader.ReadString('\n')
 	plainText = plainText[:len(plainText)-1] // 개행 문자 제거
 
-	fmt.Print("Enter encryption key: ")
+	fmt.Print("Enter Encryption key: ")
 	key, _ := reader.ReadString('\n')
 	key = key[:len(key)-1] // 개행 문자 제거
 
 
-	encryptedText, err := pkg.Encrypt(plainText, key)
+	EncryptedText, err := pkg.EncryptStr(plainText, key)
 	if err != nil {
-		fmt.Println("Error encrypting text:", err)
+		fmt.Println("Error EncryptString text:", err)
 		return
 	}
 
-	fmt.Println("Encrypted text:", encryptedText)
+	fmt.Println("EncryptStred text:", EncryptedText)
 
-	decryptedText, err := pkg.Decrypt(encryptedText, key)
+	DecryptedText, err := pkg.DecryptStr(EncryptedText, key)
 	if err != nil {
-		fmt.Println("Error Decrypting text:", err)
+		fmt.Println("Error DecryptString text:", err)
 		return
 	}
 
-	fmt.Println("Decrypted text:", decryptedText)
+	fmt.Println("DecryptStred text:", DecryptedText)
+
+	*/
 }

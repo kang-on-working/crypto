@@ -17,7 +17,7 @@ func keyToHash(key string) []byte {
 }
 
 // Decrypt 함수는 주어진 암호화된 문자열을 복호화하여 원래 문자열을 반환합니다.
-func Decrypt(encryptedStr string, key string) (string, error) {
+func DecryptStr(encryptedStr string, key string) (string, error) {
 
 	ciphertextBytes, err := base64.StdEncoding.DecodeString(encryptedStr)
 	if err != nil {
@@ -50,7 +50,7 @@ func Decrypt(encryptedStr string, key string) (string, error) {
 
 
 // Encrypt 함수는 주어진 원문 문자열을 암호화하여 암호화된 문자열을 반환합니다.
-func Encrypt(plainText string, key string) (string, error) {
+func EncryptStr(plainText string, key string) (string, error) {
 	HashKey := keyToHash(key)
 	block, err := aes.NewCipher(HashKey)
 	if err != nil {
