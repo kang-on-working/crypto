@@ -3,19 +3,13 @@ package pkg
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
 )
 
-func keyToHash(key string) []byte {
-	hash := sha256.Sum256([]byte(key))
-	return hash[:]
-}
-
 // Decrypt 함수는 주어진 암호화된 문자열을 복호화하여 원래 문자열을 반환합니다.
 func DecryptStr(encryptedStr string, key string) (string, error) {
-	HashKey := keyToHash(key)
+	HashKey := KeyToHash(key)
 
 	ciphertextBytes, err := base64.StdEncoding.DecodeString(encryptedStr)
 	if err != nil {

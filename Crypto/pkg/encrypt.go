@@ -9,7 +9,7 @@ import (
 )
 // Encrypt 함수는 주어진 원문 문자열을 암호화하여 암호화된 문자열을 반환합니다.
 func EncryptStr(plainText string, key string) (string, error) {
-	HashKey := keyToHash(key)
+	HashKey := KeyToHash(key)
 	block, err := aes.NewCipher(HashKey)
 	if err != nil {
 		return "", err
