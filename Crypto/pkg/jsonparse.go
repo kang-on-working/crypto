@@ -27,3 +27,11 @@ func JsonParse(jsonFile string) (git GIT, err error) {
 
 	return git, nil
 }
+
+func GitToJson(git GIT) ([]byte, error) {
+	JsonData, err := json.MarshalIndent(git, "", "	")
+	if err != nil {
+		return nil, err
+	}
+	return JsonData, nil
+}

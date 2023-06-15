@@ -2,12 +2,15 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"pkg"
 )
 
 func main() {
+
+	JsonFile := "./git.json"
 
 	var pnt *string
 	if len(os.Args) < 2 {
@@ -24,7 +27,7 @@ func main() {
 
 	key := *pnt
 
-	git, err := pkg.JsonParse("./git.json")	
+	git, err := pkg.JsonParse(JsonFile)	
 	if err != nil {
 		fmt.Println("Json Parsing Error: ", err)
 		return
@@ -36,15 +39,10 @@ func main() {
 		fmt.Println("Json Encrypt Error:", err)
 		return
 	}
+	JsonData, err := pkg.GitToJson(EncryptedGit)
+	
+	err = ioutil.WriteFile(JsonFile, JsonData, 0644)
 
 	fmt.Println(EncryptedGit)
-
-	DecryptedGit, err := pkg.DecryptJsonValue(EncryptedGit, key)
-	if err != nil {
-		fmt.Println("Json Decrypt Error:", err)
-		return
-	}
-
-	fmt.Println(DecryptedGit)
 
 }
